@@ -1,0 +1,43 @@
+{% extends 'cms/panel/page.html.twig' %}
+
+{% block stylesheet %}
+    <!-- summernote-wysiwyg -->
+    <link href="{{ asset('vendors/summernote/summernote-lite.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'attr' : {'class' : 'form-horizontal form-label-left'}}) }}
+                      <div class="item form-group">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="name"> {{ form_label(form.name) }} <span class="required">*</span>
+                        </label>
+                        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+                          {{ form_widget(form.name, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="name"> {{ form_label(form.url) }} <span class="required">*</span>
+                        </label>
+                        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+                          {{ form_widget(form.url, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="name"> {{ form_label(form.description) }} <span class="required">*</span>
+                        </label>
+                        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+                          {{ form_widget(form.description, {'attr' : {'style' : 'display:none;'}}) }}
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <div class="col-xs-12 text-center">
+                          <a class="btn btn-default" href="{{ path('subpage_list') }}">Subpage list</a>
+                          {{ form_widget(form.save, {'attr' : {'class' : 'btn btn-success'}}) }}
+                        </div>
+                      </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascript %}
+    <!-- summernote-wysiwyg -->
+    <script src="{{ asset('vendors/summernote/summernote-lite.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% form_theme form _self %}
+
+{% block form_errors %}
+    {% if errors is defined and errors|length > 0 %}
+        {% for error in errors %}
+            <span style="color:red; font-weight:bold;">{{ error.message }}</span>
+        {% endfor %}
+    {% endif %}
+{% endblock form_errors %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Order form</title>
+    </head>
+
+    <body>  
+        <a href="{{ path('index') }}"> Order page </a> <br/>
+        <h3>Basket</h3>
+        {{ form_start(form)}}
+        <table>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.name) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.name) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.name) }}</td>
+            </tr
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.surname) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.surname) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.surname) }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.company) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.company) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.company) }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.city) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.city) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.city) }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.zip) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.zip) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.zip) }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.street) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.street) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.street) }}</td>
+            </tr>
+
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.house) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.house) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.house) }}</td>   
+            </tr>
+
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.flat_number) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.flat_number) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.flat_number) }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.email) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.email) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.email) }}</td>
+            </tr>
+
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.phone) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.phone) }}</td>
+                <td style="width:auto; text-align: left;"> {{ form_errors(form.phone) }}</td>
+            </tr>
+
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.shipping_method) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.shipping_method) }}</td>
+{#                <td style="width:auto; text-align: left;"> {{ form_errors(form.shipping_method) }}</td>#}
+            </tr>
+            <tr>
+                <td style="text-align: right;"> {{ form_label(form.payment_method) }} </td>
+                <td style="width:auto;"> {{ form_widget(form.payment_method) }}</td>
+{#                <td style="width:auto; text-align: left;"> {{ form_errors(form.payment_method) }}</td>#}
+            </tr>
+            <tr>
+                <td></td>
+                <td> {{ form_widget(form.submitOrder) }}</td>
+            </tr>
+        </table>
+        {{ form_widget(form) }}
+        {{ form_end(form) }}  
+    </div>
+</body>
+</html>

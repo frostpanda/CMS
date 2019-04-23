@@ -1,0 +1,32 @@
+{% extends '/cms/panel/page.html.twig' %}
+
+{% block stylesheet %}
+    
+{% endblock %}
+
+{% block content %}
+                    <div class="row">
+{% if productImages %}
+    {% for image in productImages %}
+                      <div class="col-md-55">
+                        <div class="thumbnail">
+                          <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="{{ asset('images/products/') }}{{ image.name }}" alt="{{ product.name }}">
+                            <div class="mask">
+                              <div class="tools tools-bottom">
+{#                                <a href="#"><i class="fa fa-link"></i></a>
+                                <a href="#"><i class="fa fa-pencil"></i></a>#}
+                                <a href="{{ path('delete_product_image', {'productURL' : image.product.url, 'productImageID' : image.id}) }}" onclick="return confirmDelete()"><i class="fa fa-times"></i></a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+    {% endfor %}
+{% else %}  
+                      <div class="col-xs-12">
+                        <p> Product do not have any image! Upload images for product!</p>
+                      </div>
+{% endif %}             
+                    </div>
+{% endblock %}

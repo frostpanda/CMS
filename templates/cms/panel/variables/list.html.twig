@@ -1,0 +1,36 @@
+{% extends 'cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table rtable-center table-striped jambo_table">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Variable tag</th>
+                            <th class="column-title">Variable value</th>
+                            <th class="column-title">Created </th>
+                            <th class="column-title">Modified </th>
+                            <th class="column-title no-link last">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for variable in variables %}
+                              <tr>
+                                <td>{{ variable.tag }}</td>
+                                <td>{{ variable.val }}</td>
+                                <td>{{ variable.created|date('d-m-Y H:i:s') }}</td>
+                                <td>{{ variable.modified ? variable.modified|date('d-m-Y H:i:s') }}</td>
+                                <td class="last">
+                                  <a href="/panel/variables/edit/{{ variable.tag }}"><i class="fa fa-edit"></i></a>
+                                  <a href="/panel/variables/delete/{{ variable.tag }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}
+
+{% block javascript %}
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('js/utilities.js') }}"></script>
+{% endblock %}

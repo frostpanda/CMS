@@ -1,0 +1,47 @@
+{% extends '/cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Product name</th>
+                            <th class="column-title">Category name</th>
+                            <th class="column-title">Product URL</th>
+                            <th class="column-title">Old price</th>
+                            <th class="column-title">Current price </th>
+                            <th class="column-title">Product rating</th>
+                            <th class="column-title">Products votes</th>
+                            <th class="column-title">Availability</th>
+                            <th class="column-title">Created</th>
+                            <th class="column-title">Modified</th>
+                            <th class="column-title no-link last">Action</th>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {% for product in productList %}
+                              <tr>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.category.name }}</td>
+                                <td>{{ product.url }}</td>
+                                <td>{{ product.oldPrice }} </td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.rating }}</td>
+                                <td>{{ product.votes }}</td>
+                                <td>{{ product.onStock|trans }}</td>
+                                <td>{{ product.created|date('d-m-Y H:i:s') }}</td>
+                                <td>{{ product.modified ? product.modified|date('d-m-Y H:i:s') }}</td>
+                                <td class="last">
+                                  <a href="{{ path('edit_product', {'productURL' : product.url}) }}"><i class="fa fa-edit"></i></a>
+                                  <a href="{{ path('product_gallery', {'productURL' : product.url}) }}"><i class="fa fa-image"></i></a>
+                                  <a href="{{ path('product_slider', {'productURL' : product.url}) }}"><i class="fa fa-arrow-circle-left"></i><i class="fa fa-arrow-circle-right"></i></a>
+                                  <a href="{{ path('delete_product', {'productURL' : product.url}) }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}

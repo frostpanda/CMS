@@ -1,0 +1,30 @@
+{% extends 'cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Flavour name </th>
+                            <th class="column-title">Created </th>
+                            <th class="column-title">Modified </th>
+                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for flavour in flavourList %}
+                              <tr>
+                                <td>{{ flavour.name }}</td>
+                                <td>{{ flavour.created|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ flavour.modified ? flavour.modified|date('Y-m-d H:i:s') }}</td>
+                                <td class="last">
+                                  <a href="{{ path('edit_flavour', {'flavourID' : flavour.id}) }}"><i class="fa fa-edit"></i>
+                                  <a href="{{ path('delete_flavour', {'flavourID' : flavour.id}) }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends '/cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Discount code </th>
+                            <th class="column-title">Discount value </th>
+                            <th class="column-title">Used codes </th>
+                            <th class="column-title">Expiry date </th>
+                            <th class="column-title">Created </th>
+                            <th class="column-title">Modified </th>
+                            <th class="column-title no-link last"><span class="nobr">Action</span>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {% for discountCode in discountCodeList %}
+                              <tr>
+                                <td>{{ discountCode.code }}</td>
+                                <td>{{ discountCode.discount }}%</td>
+                                <td>{{ discountCode.codes_used }}</td>
+                                <td>{{ discountCode.expiry_date|date('d-m-Y') }}</td>
+                                <td>{{ discountCode.created|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ discountCode.modified ? discountCode.modified|date('Y-m-d H:i:s') }}</td>
+                                <td class="last">
+                                  <a href="{{ path('edit_discount_code', {'discountCodeID' : discountCode.id}) }}"><i class="fa fa-edit"></i>
+                                  <a href="{{ path('delete_discount_code', {'discountCodeID' : discountCode.id}) }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Nutrigo CMS</title>
+
+    <!-- Animate.css -->
+    <link href="{{ asset('vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    
+    {% block stylesheet %}{% endblock %}
+    
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('css/custom.min.css') }}" rel="stylesheet">  
+  </head>
+{% if app.request.cookies.get('menuState') == 'nav-md' %}
+  <body class="nav-md">
+{% else %}
+  <body class="nav-sm">
+{% endif %}
+
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title text-center" style="border: 0;">
+              <a href="{{ path('cms_landing_page') }}" class="site_title"><span>Nutrigo lab CMS</span></a>
+            </div>
+            <div class="clearfix"></div>
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Menu</h3>
+                <ul class="nav side-menu">
+                  <li class="{{ editOrder|default() }}"><a><i class="fa fa-credit-card"></i>Orders<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownOrder|default() }}>
+                      <li><a href="{{ path('order_list') }}">Order list</a></li>
+                    </ul>
+                  </li>
+                  <li class="{{ editCategory|default() }}"><a><i class="fa fa-list-alt"></i>Categories<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownCategory|default() }}>
+                      <li><a href="{{ path('category_list') }}">Category list</a></li>
+                      <li><a href="{{ path('new_category') }}">New category </a></li>
+                    </ul>
+                  </li>
+                  <li class="{{ editProduct|default() }}"><a><i class="fa fa-product-hunt"></i>Products<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownProduct|default() }}>
+                      <li><a href="{{ path('product_list') }}">Product list</a></li>
+                      <li><a href="{{ path('new_product') }}">New product </a></li>
+                    </ul>
+                  </li>
+                  <li class="{{ editDiscountCode|default() }}"><a><i class="fa fa-percent"></i>Discount codes<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownDiscountCode|default() }}>
+                      <li><a href="{{ path('discount_code_list') }}">Discount code list</a></li>
+                      <li><a href="{{ path('new_discount_code') }}">New discount code</a></li>
+                    </ul>
+                  </li>
+                  <li class="{{ editFlavour|default() }}"><a><i class="fa fa-product-hunt"></i> Flavours <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownFlavour|default() }}>
+                      <li><a href="{{ path('flavour_list') }}">Flavours list</a></li>
+                    </ul>
+                  </li>
+                  <li class="{{ editSubpage|default() }}"><a><i class="fa fa-columns"></i>Subpages<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownSubpage|default() }}>
+                      <li><a href="{{ path('subpage_list') }}">List of subpages</a></li>
+                      <li><a href="{{ path('new_subpage') }}">New subpage</a></li>
+                    </ul>
+                  </li>
+                  <li class="{{ pageConfiguration|default() }}"><a><i class="fa fa-cogs"></i>Product configuration<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu" {{ dropdownPageConfiguration|default() }}>
+                      <li><a href="{{ path('variable_list') }}">Configuration</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle" onclick="return changeNavbarState()"><i class="fa fa-bars"></i></a>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i>
+                    {{ app.user.email }}
+                    <span class="fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li>
+                      <a href="{{ path('user_settings') }}"><i class="fa fa-cog pull-right"></i>Settings</a>
+                    </li>
+                    <li><a href="{{ path('cms_logout') }}"><i class="fa fa-sign-out pull-right"></i>Logout</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->  
+        
+        {% block page %}{% endblock %}
+        
+        <!-- footer content -->
+        <footer>
+          <div class="clearfix"></div>
+          <div class="pull-right">
+            Nutrigo Lab CMS by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('vendors/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('vendors/nprogress/nprogress.js') }}"></script>
+    <!-- Skycons -->
+    <script src="{{ asset('vendors/skycons/skycons.js') }}"></script>
+    <!-- js-cookie -->
+    <script src="{{ asset('vendors/js-cookie/js.cookie.js') }}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <!-- Helper functions -->
+    <script src="{{ asset('js/utils.min.js') }}"></script>
+    {% block javascript %}{% endblock %}
+  </body>
+</html>

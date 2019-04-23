@@ -1,0 +1,40 @@
+{% extends 'cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table rtable-center table-striped jambo_table">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Order number</th>
+                            <th class="column-title">Discount code</th>
+                            <th class="column-title">Payment method</th>
+                            <th class="column-title">Order price</th>
+                            <th class="column-title">Shipping method</th>
+                            <th class="column-title">Shipping cost</th>
+                            <th class="column-title">Order date</th>
+                            <th class="column-title">Modified</th>
+                            <th class="column-title no-link last">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for order in orderList %}
+                              <tr>
+                                <td>{{ order.orderNumber }}</td>
+                                <td>{{ order.discountCode ? order.discountCode.code : '-' }}</td>
+                                <td>{{ order.paymentMethod|trans }}</td>
+                                <td>{{ order.total }}</td>
+                                <td>{{ order.shippingMethod|trans }}</td>
+                                <td>{{ order.shippingCost}}</td>
+                                <td>{{ order.created|date('d-m-Y H:i:s') }}</td>
+                                <td>{{ order.modified ? order.modified|date('d-m-Y H:i:s') : '-' }}</td>
+                                <td class="last">
+                                  <a href="{{ path('order_detail', {'orderNumber': order.orderNumber}) }}"><i class="fa fa-info-circle"></i></a>
+                                  <a href="{{ path('edit_order', {'orderNumber': order.orderNumber}) }}"><i class="fa fa-edit"></i></a>
+                                  <a href="{{ path('delete_order', {'orderNumber': order.orderNumber}) }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Gentelella Alela! | </title>
+        <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/custom.min.css') }}" rel="stylesheet">
+    </head>
+
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <div class="col-md-12">
+                    <div class="col-middle">
+                        <div class="text-center text-center">
+                            <h1 class="error-number">{{ status_code }}</h1>
+                            {% if status_code == 404 %}
+                                <h2>Sorry but we couldn't find this page</h2>
+                                <p>This page you are looking for does not exist.</p>
+                            {% elseif status_code == 403 %}   
+                                <h2>Access denied</h2>
+                                <p>Full authentication is required to access this resource.</p>
+                            {% elseif status_code == 500 %}
+                                <h2>Internal Server Error</h2>
+                                <p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</p>
+                            {% endif %}
+                            <p><a href="{{ path('index') }}">Main page</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

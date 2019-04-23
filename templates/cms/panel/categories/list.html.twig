@@ -1,0 +1,35 @@
+{% extends 'cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table rtable-center table-striped jambo_table">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Category name</th>
+                            <th class="column-title">Category URL</th>
+                            <th class="column-title">Products in category</th>
+                            <th class="column-title">Created </th>
+                            <th class="column-title">Modified </th>
+                            <th class="column-title no-link last">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for category in categoryInformation %}
+                              <tr>
+                                <td>{{ category.name }}</td>
+                                <td>{{ category.url }}</td>
+                                <td>{{ category.number_of_products }}</td>
+                                <td>{{ category.created }}</td>
+                                <td>{{ category.modified }}</td>
+                                <td class="last">
+                                  <a href="{{ path('edit_category', {'categoryURL' : category.url}) }}"><i class="fa fa-edit"></i></a>
+                                {% if category.number_of_products == 0 %}
+                                  <a href="{{ path('delete_category', {'categoryID' : category.id}) }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                {% endif %}
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}

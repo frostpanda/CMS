@@ -1,0 +1,35 @@
+{% extends 'cms/panel/skeleton.html.twig' %}
+
+{% block page %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h3>{{ pageTitle|raw }}</h3>
+                    {% if previousPageUrl is defined %}
+                    <a class="btn btn-primary btn-xs" href="{{ path(previousPageUrl) }}">Previous page</a>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">         
+{% for label, messages in app.flashes(['info', 'warning', 'danger', 'success']) %}
+    {% for message in messages %}
+                        <div class="alert alert-{{ label }} text-center alert-dismissible form-message" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            {{ message }}
+                        </div>
+    {% endfor %}
+{% endfor %}
+    
+{% block content %}{% endblock %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}

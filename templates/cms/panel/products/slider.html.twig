@@ -1,0 +1,33 @@
+{%  extends('/cms/panel/page.html.twig') %}
+
+{% block content %}
+                    <div class="row">
+{% if sliderImages %}
+    {% for image in sliderImages %}
+                        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 slider">
+                            <div class="thumbnail" style="margin-left: auto; margin-right: auto;">
+                                <div class="image view view-first">
+                                  <img style="width: 100%; display: block;" src="{{ asset('images/products/') }}{{ image.name }}" alt="{{ image.product.name }}">
+                                </div>
+                                <div class="tools">
+{% if image.position != 1 %}
+                                    <a href="{{ path('product_slider_up', {'productURL' : image.product.url, 'sliderImageID' : image.id}) }}"><i class="fa fa-angle-up"></i></a>
+{% endif %}
+{% if image.position != loop.length  %}
+                                    <a href="{{ path('product_slider_down', {'productURL' : image.product.url, 'sliderImageID' : image.id}) }}"><i class="fa fa-angle-down"></i></a>
+{% endif %}
+                                    <a href="{{ path('delete_image_slider', {'productURL' : image.product.url, 'sliderImageID' : image.id} ) }}" onclick="return confirmDelete()"><i class="fa fa-times"></i></a>
+                                </div>   
+                                <div class="caption">
+                                    <p>Position in slider: {{image.position}}</p>
+                                </div>
+                            </div>
+                        </div>
+    {% endfor %}
+{% else %}  
+                      <div class="col-xs-12">
+                        <p> Product do not have any image for slider! Upload images for it!</p>
+                      </div>
+{% endif %}     
+                    </div>
+{% endblock %}

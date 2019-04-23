@@ -1,0 +1,203 @@
+#--------------------------------------------------------------------------------
+
+index:
+  path: /
+  controller: App\Controller\ProductPageController::generateProductListPage 
+
+#--------------------------------------------------------------------------------
+
+show_product:
+    path: /product/{productURL}
+    controller: App\Controller\ProductPageController::generateProductPage 
+
+basket:
+  path: /basket
+  controller: App\Controller\BasketController::generateBasketPage
+
+remove_product:
+    path: /basket/remove/{productID}
+    controller: App\Controller\BasketController::removeProductFromBasket
+    methods: GET
+
+order_form: 
+    path: /basket/order
+    controller: App\Controller\OrderController::generateOrderPage
+
+#--------------------------------------------------------------------------------
+
+cms_login_page:
+  path: /login
+  controller: App\Controller\SecurityLoginController::loginPage
+
+cms_landing_page:
+  path: /panel
+  controller: App\Controller\CmsController::generatePanelLandingPage
+
+cms_logout:
+  path: /panel/logout
+
+#--------------------------------------------------------------------------------
+
+order_list:
+    path: /panel/order/list
+    controller: App\Controller\OrdersController::generateOrderListPage
+    
+order_detail:
+    path: /panel/order/detail/{orderNumber}
+    controller: App\Controller\OrdersController::generateOrderDetailPage
+
+edit_order: 
+    path: /panel/order/edit/{orderNumber}
+    controller: App\Controller\OrdersController::generateEditOrderPage
+    
+modify_order_product_quantity:
+    path: /panel/order/edit/{orderNumber}/product/edit/{productURL}
+    controller: App\Controller\OrdersController:generateEditProductOrderPage
+    
+delete_product_from_order:
+    path: /panel/order/edit/{orderNumber}/product/delete/{productURL}
+    controller: App\Controller\OrdersController:deleteProductFromOrder    
+
+delete_order:
+    path: /panel/order/delete/{orderNumber}
+    controller: App\Controller\OrdersController::deleteOrder
+
+#--------------------------------------------------------------------------------
+
+category_list:
+  path: /panel/category/list
+  controller: App\Controller\CategoryController::generateCategoryListPage
+
+new_category:
+  path: /panel/category/new
+  controller: App\Controller\CategoryController::generateNewCategoryPage
+
+edit_category:
+  path: /panel/category/edit/{categoryURL}
+  controller: App\Controller\CategoryController::generateEditCategoryPage
+
+delete_category:
+  path: /panel/category/delete/{categoryID}
+  controller: App\Controller\CategoryController::deleteCategory
+
+#--------------------------------------------------------------------------------
+
+product_list:
+  path: /panel/product/list
+  controller: App\Controller\ProductController::generateProductListPage
+
+new_product:
+  path: /panel/product/new
+  controller: App\Controller\ProductController::generateNewProductPage
+
+edit_product:
+  path: /panel/product/{productURL}/edit
+  controller: App\Controller\ProductController::generateEditProductPage
+
+delete_product:
+  path: /panel/product/{productURL}/delete
+  controller: App\Controller\ProductController::deleteProduct
+
+
+product_gallery:
+    path: /panel/product/{productURL}/gallery
+    controller: App\Controller\ProductGalleryController::generateProductGalleryPage
+    
+delete_product_image:
+    path: /panel/product/{productURL}/gallery/delete/{productImageID}
+    controller: App\Controller\ProductGalleryController:deleteProductImage
+
+    
+product_slider:
+    path: /panel/product/{productURL}/slider
+    controller: App\Controller\ProductSliderController::generateProductSliderPage
+
+product_slider_up:
+    path: /panel/product/{productURL}/slider/up/{sliderImageID}
+    controller: App\Controller\ProductSliderController::sliderChangeImagePositionUp
+
+product_slider_down:
+    path: /panel/product/{productURL}/slider/down/{sliderImageID}
+    controller: App\Controller\ProductSliderController::sliderChangeImagePositionDown 
+    
+delete_image_slider:
+    path: /panel/product/{productURL}/slider/delete/{sliderImageID}
+    controller: App\Controller\ProductSliderController::deleteImageFromSlider
+  
+
+#--------------------------------------------------------------------------------
+
+flavour_list:
+  path: /panel/flavour/list
+  controller: App\Controller\FlavoursController::generateFlavourListPage
+
+edit_flavour:
+  path: /panel/flavour/edit/{flavourID}
+  controller: App\Controller\FlavoursController::generateEditFlavourPage
+
+delete_flavour:
+  path: /panel/flavour/delete/{flavourID}
+  controller: App\Controller\FlavoursController:deleteFlavour
+
+#--------------------------------------------------------------------------------
+
+discount_code_list:
+  path: /panel/discount-codes/list
+  controller: App\Controller\DiscountCodesController::generateDiscountCodeListPage
+
+new_discount_code:
+  path: panel/discount-codes/new
+  controller: App\Controller\DiscountCodesController::generateNewDiscountCodePage
+
+edit_discount_code:
+  path: /panel/discount-codes/edit/{discountCodeID}
+  controller: App\Controller\DiscountCodesController::generateEditDiscountCodePage
+
+delete_discount_code:
+  path: /panel/discount-codes/delete/{discountCodeID}
+  controller: App\Controller\DiscountCodesController::deleteDiscountCode
+
+#--------------------------------------------------------------------------------
+
+subpage_list:
+    path: /panel/subpages/list
+    controller: App\Controller\SubpagesController::generateSubpageListPage
+    
+new_subpage:
+    path: /panel/subpages/new
+    controller: App\Controller\SubpagesController::generateNewSubpagePage
+    
+edit_subpage:
+    path: /panel/subpages/edit/{subpageID}
+    controller: App\Controller\SubpagesController:generateEditSubpagePage
+    
+delete_subpage:
+    path: /panel/subpages/delete/{subpageID}
+    controller: App\Controller\SubpagesController::deleteSubpage
+    
+#--------------------------------------------------------------------------------
+
+variable_list:
+    path: /panel/variables/list
+    controller: App\Controller\VariablesController::generateVariableListPage
+    
+new_variable:
+    path: /panel/variables/new
+    controller: App\Controller\VariablesController::generateNewVariablePage
+    
+edit_variable: 
+    path: /panel/variables/edit/{variableTag}
+    controller: App\Controller\VariablesController::generateEditVariablePage
+    
+delete_variable:
+     path: /panel/variables/delete/{variableTag}
+     controller: App\Controller\VariablesController:deleteVariable
+
+#--------------------------------------------------------------------------------
+
+user_settings:
+  path: /panel/settings
+  controller: App\Controller\SettingsController::generateSettingsPage
+
+
+

@@ -1,0 +1,119 @@
+{% extends '/cms/panel/page.html.twig' %}
+
+{% form_theme form '/themes/custom_form_errors.html.twig' %}
+
+{% block stylesheet %}
+    <!-- summernote-wysiwyg -->
+    <link href="{{ asset('vendors/summernote/summernote-lite.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, {'attr' : {'class' : 'form-horizontal form-label-left'}}) }}
+    {{ form_errors(form) }}
+    <div class="form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="name">{{ form_label(form.category) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.category, {'attr' : {'class' : 'form-control'}})}}
+        </div>
+        {{ form_errors(form.category) }}
+    </div>
+
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="name">{{ form_label(form.name) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.name, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="email">{{ form_label(form.url) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.url, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.url) }}
+    </div>
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="email">{{ form_label(form.price) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.price, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.price) }}
+    </div>  
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="email">{{ form_label(form.old_price) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.old_price, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.old_price) }}
+    </div>
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="website">{{ form_label(form.rating) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.rating, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.rating) }}
+    </div>
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="occupation">{{ form_label(form.votes) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.votes, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.votes) }}
+    </div>
+    <div class="item form-group">
+        <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12" for="name">{{ form_label(form.promoted) }}<span class="required">*</span>
+        </label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.promoted, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.promoted) }}
+    </div>                       
+    <div class="item form-group">
+        <label for="password" class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12">{{ form_label(form.on_stock) }}<span class="required">*</span></label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.on_stock, {'attr' : {'class' : 'form-control col-md-7 col-xs-12'}}) }}
+        </div>
+        {{ form_errors(form.on_stock) }}
+    </div>
+    <div class="item form-group">
+        <label for="password" class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12">{{ form_label(form.description) }}<span class="required">*</span></label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.description, {'attr' : {'style' : 'display:none;'}}) }}
+        </div>
+        {{ form_errors(form.description) }}
+    </div>
+    <div class="item form-group">
+        <label for="password" class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12">{{ form_label(form.images) }}<span class="required">*</span><</label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.images, {'attr' : {'class' : 'form-control'}}) }}
+        </div>
+        {{ form_errors(form.images) }}
+    </div>
+    <div class="item form-group">
+        <label for="password" class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-12">{{ form_label(form.sliderImages) }}</label>
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+            {{ form_widget(form.sliderImages, {'attr' : {'class' : 'form-control'}}) }}
+        </div>
+        {{ form_errors(form.sliderImages) }}
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+        <div class="col-xs-12 text-center">
+            <a class="btn btn-default" href="{{ path('product_list') }}">Product list</a>
+            {{ form_widget(form.save, {'attr' : {'class' : 'btn btn-success'}})}}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascript %}
+    <!-- summernote-wysiwyg -->
+    <script src="{{ asset('vendors/summernote/summernote-lite.js') }}"></script>
+{% endblock %}

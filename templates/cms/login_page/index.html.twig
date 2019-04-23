@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- Meta, title, CSS, favicons, etc. -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Nutrigo CMS</title>
+		<!-- Animate.css -->
+		<link href="{{ asset('vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+		<!-- Custom Theme Style -->
+		<link href="{{ asset('css/custom.min.css') }}" rel="stylesheet">  
+	</head>
+
+	<body class="login">
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content">
+					<form method="post">
+						<h1>Log in</h1>
+{% if error %}
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{ error.messageKey|trans(error.messageData, 'security') }}
+						</div>
+{% endif %}
+						<div>
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{% trans %}login_placeholder{% endtrans %}" required autofocus />
+						</div>
+						<div>
+							<input type="password" name="password" id="inputPassword" class="form-control"  placeholder="{% trans %}password_placeholder{% endtrans %}" required />
+						</div>
+						<div>
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						</div>
+						<div>
+							<button class="btn btn-default submit" type="submit">Log In</button>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="separator"></div>
+
+						<div class="clearfix"></div>
+						<br />
+
+						<h1> Nutrigo CMS </h1>
+						<p>©2018 All Rights Reserved. </p>
+					</form>
+				</section>
+			</div>
+		</div>
+
+	    <!-- jQuery -->
+	    <script src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
+	    <!-- Bootstrap -->
+	    <script src="{{ asset('vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	    <!-- Custom Theme Scripts -->
+	    <script src="{{ asset('js/custom.min.js') }}"></script>
+	</body>
+</html>

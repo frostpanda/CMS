@@ -1,0 +1,36 @@
+{% extends 'cms/panel/page.html.twig' %}
+
+{% block content %}
+                    <div class="table-responsive">
+                      <table class="table rtable-center table-striped jambo_table">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Subpage name</th>
+                            <th class="column-title">Subpage URL</th>
+                            <th class="column-title">Created </th>
+                            <th class="column-title">Modified </th>
+                            <th class="column-title no-link last">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for subpage in subpageList %}
+                              <tr>
+                                <td>{{ subpage.name }}</td>
+                                <td>{{ subpage.url }}</td>
+                                <td>{{ subpage.created|date('d-m-Y H:i:s') }}</td>
+                                <td>{{ subpage.modified ? subpage.modified|date('d-m-Y H:i:s') }}</td>
+                                <td class="last">
+                                  <a href="{{ path('edit_subpage', {'subpageID' : subpage.id }) }}"><i class="fa fa-edit"></i></a>
+                                  <a href="{{ path('delete_subpage', {'subpageID' : subpage.id }) }}" onclick="return confirmDelete()"><i class="fa fa-trash"></i></a>
+                                </td>
+                              </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+{% endblock %}
+
+{% block javascript %}
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('js/utilities.js') }}"></script>
+{% endblock %}

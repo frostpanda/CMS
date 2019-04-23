@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xliff version="1.2" 
+    xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="login_placeholder">
+                <source>login_placeholder</source>
+                <target>Enter email</target>
+            </trans-unit>
+            <trans-unit id="password_placeholder">
+                <source>password_placeholder</source>
+                <target>Enter password</target>
+            </trans-unit>
+            <trans-unit id="shipping_method_normal">
+                <source>standard</source>
+                <target>Standard shipping</target>
+            </trans-unit>
+            <trans-unit id="shipping_method_express">
+                <source>express</source>
+                <target>DHL/FedEx shipping</target>
+            </trans-unit>
+            <trans-unit id="payment_paypal">
+                <source>paypal</source>
+                <target>Paypal</target>
+            </trans-unit>
+            <trans-unit id="payment_credit_card">
+                <source>credit_card</source>
+                <target>Credit card</target>
+            </trans-unit>
+
+            <trans-unit id="product_on_stock">
+                <source>1</source>
+                <target>Yes</target>
+            </trans-unit>
+            <trans-unit id="product_not_on_stock">
+                <source>0</source>
+                <target>No</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

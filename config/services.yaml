@@ -1,0 +1,82 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    # basket cookie configuration
+    # cookie lifetime in minutes, for better flexibility
+    basket_cookie_lifetime: 120
+    
+    # Whether the client should send back the cookie only over HTTPS or null to auto-enable this when the request is already using HTTPS
+    # TRUE FOR ONLY HTTPS
+    # FALSE IF COOKIE CAN BE SEND USING HTTP PROTOCOL
+    cookie_secure: false
+    
+    # Whether the cookie will be made accessible only through the HTTP protocol
+    cookie_http_only: false
+    
+    
+    # order shipping price 
+    standard_shipping_cost: 15.2
+    express_shipping_cost: 20.00  
+    
+    # validation patterns
+    #
+    # common patterns
+    #
+    form_url_pattern: '/^[-a-z0-9]+$/'
+    form_name_pattern: '/^[a-zA-Z0-9\h]+$/'
+    
+    # order form patterns
+    #
+    polish_names_pattern: '/^[\p{L}\h]+$/u'
+    poland_zip_code_pattern: '/^[0-9]{2}+[-]+[0-9]{3}+$/'
+    street_name_pattern: '/^[\p{L}\d- ]+$/u'
+    house_number_pattern: '/^[\w\d]+$/'
+
+    # content management system patterns
+    #
+    wysiwig_pattern: '/^<script>+$/'
+    variable_form_pattern: '/^[a-zA-Z0-9]+$/'
+    discount_code_pattern: '/^[a-zA-Z0-9]+$/'
+    password_pattern: '/^[a-z]+[0-9]{2,}+$/'
+    
+    
+    # upload directories
+    upload_directory_products: '%kernel.project_dir%\public\images\products\'
+    
+    # image file size in MB
+    product_image_max_size: 2M
+    
+    # product thumbnail width (x) and height (y) in pixels 
+    product_thumbnail_x: 320
+    product_thumbnail_y: 480
+    
+    # product image width (x) and height (y) in pixels
+    product_image_min_width: 680
+    product_image_min_heigth: 840
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

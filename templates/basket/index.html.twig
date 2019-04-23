@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Test basket</title>
+    </head>
+
+    <body>  
+        <a href="{{ path('index') }}"> Main page </a> <br/>
+
+        <h3>Basket</h3>
+
+        {% for messages in app.flashes('danger')  %}
+            {{ messages }}<br/><br/>
+        {% endfor %}
+        {% for messages in app.flashes('success')  %}
+            {{ messages }}<br/><br/>
+        {% endfor %}
+        <div>
+            {% if basket.productsInBasket is defined %}
+                <table>
+                    <thead>
+                    <th> Action </th>
+                    <th> Product </th>
+                    <th> Old Price </th>
+                    <th> Current price </th>
+                    <th> Savings </th>
+                    <th> Quantity </th>
+                    <th> Total </th>
+                    </thead>
+                    <tbody>
+                        {% for product in basket.productsInBasket %}
+                            <tr style="text-align:center;">
+                                <td><a href="{{ path('remove_product', {'productID' : product.id}) }}">Remove</a></td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.old_price }}</td>
+                                <td>{{ product.price }}</td>
+                                <td>{{ product.savings  }}%</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>{{ product.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Order price: <b>{{ basket.total }}</b></p>
+                {% if basket.orderTotalWithDiscount is defined %}
+                    <p>Order price with discount code: <b>{{ basket.orderTotalWithDiscount }}</b></p>
+                {% endif %}   
+            </div>
+            <br />
+            <div>            
+
+                {{ form_start(form)}}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}  
+            {% else %}
+                <div>
+                    No products in basket!
+                </div>
+            {% endif %}
+
+        </div>
+    </body>
+</html>
