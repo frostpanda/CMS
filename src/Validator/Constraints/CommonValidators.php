@@ -29,13 +29,14 @@ class CommonValidators {
     public function validateIfFieldsEmpty($formFields): bool {
         if (is_array($formFields)) {
             foreach ($formFields as $field) {
-                return $this->checkIfFieldEmpty($field);
+                if(!$this->checkIfFieldEmpty($field)) {
+                    return false;
+                }
             }
+            return true;
         } else {
             return $this->checkIfFieldEmpty($formFields);
         }
-
-        return true;
     }
 
     public function validateIfFieldsModified(array $newDataset, array $currentDataset = null): bool {
