@@ -23,7 +23,7 @@ class PasswordForm extends AbstractType {
                     'label' => 'Confirm password:',
 //                    'required' => false,
                 ))
-                ->add('save', SubmitType::class, array(
+                ->add('changePassword', SubmitType::class, array(
                     'label' => 'Change password',
                 ))
         ;
