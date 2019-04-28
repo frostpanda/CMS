@@ -15,10 +15,11 @@ class SettingsController extends AbstractController {
 
         $changePasswordForm = $this->createForm(PasswordForm::class);
 
-        if ($passwordValidation->validateForm($changePasswordForm)) {
-            if ($changeUserPassword->changePassword($changePasswordForm->get('newPassword')->getData())) {
-                return $this->redirectToRoute('cms_logout');
+        if(isset($_POST[$changePasswordForm->getName()]['changePassword'])){
+            if ($passwordValidation->validateForm($changePasswordForm)) {
+                $changeUserPassword->changePassword($changePasswordForm->get('newPassword')->getData());
             }
+            return $this->redirectToRoute('user_settings');
         }
 
         return $this->render('/cms/panel/settings/index.html.twig', array(
