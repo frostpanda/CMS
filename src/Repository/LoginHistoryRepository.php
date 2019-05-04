@@ -13,10 +13,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method LoginHistory[]    findAll()
  * @method LoginHistory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LoginHistoryRepository extends ServiceEntityRepository {
+class LoginHistoryRepository extends ServiceEntityRepository
+{
+    private $query;
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, LoginHistory::class);
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -47,22 +51,21 @@ class LoginHistoryRepository extends ServiceEntityRepository {
       ;
       }
      */
-    public function findLoginHistoryByID(int $userID, int $recordsLimit = 20) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function findLoginHistoryByID(int $userID, int $recordsLimit = 20)
+    {
+        $this->query
+            ->select('db.ip_address, db.created, db.logged')
+            ->from(LoginHistory::class, 'db')
+            ->where('db.user = :userID')
+            ->orderBy('db.created', 'DESC')
+            ->setParameter(':userID', $userID, \PDO::PARAM_INT)
+            ->setMaxResults($recordsLimit);
 
-        $query
-                ->select('db.ip_address, db.created, db.logged')
-                ->from(LoginHistory::class, 'db')
-                ->where('db.user = :userID')
-                ->orderBy('db.created', 'DESC')
-                ->setParameter(':userID', $userID, \PDO::PARAM_INT)
-                ->setMaxResults($recordsLimit)
-        ;
-
-        return $query->getQuery()->getResult();
+        return $this->query->getQuery()->getResult();
     }
 
-    public function insertLoginHistory(array $loginDataset) {
+    public function insertLoginHistory(array $loginDataset)
+    {
         $userLogginIn = $this->getEntityManager()->getRepository(Administrator::class)->findOneBy(['email' => $loginDataset['loginUserName']]);
 
         if (isset($userLogginIn)) {
@@ -70,11 +73,10 @@ class LoginHistoryRepository extends ServiceEntityRepository {
                 $newLoginHistory = new LoginHistory();
 
                 $newLoginHistory
-                        ->setUser($userLogginIn)
-                        ->setLogged($loginDataset['loginResult'])
-                        ->setIpAddress($loginDataset['loginIpAddress'])
-                        ->setCreated(new \Datetime('now'))
-                ;
+                    ->setUser($userLogginIn)
+                    ->setLogged($loginDataset['loginResult'])
+                    ->setIpAddress($loginDataset['loginIpAddress'])
+                    ->setCreated(new \Datetime('now'));
 
                 $this->getEntityManager()->persist($newLoginHistory);
                 $this->getEntityManager()->flush();
@@ -84,5 +86,4 @@ class LoginHistoryRepository extends ServiceEntityRepository {
             }
         }
     }
-
 }

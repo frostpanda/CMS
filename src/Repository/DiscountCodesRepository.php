@@ -12,13 +12,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method DiscountCodes[]    findAll()
  * @method DiscountCodes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DiscountCodesRepository extends ServiceEntityRepository {
+class DiscountCodesRepository extends ServiceEntityRepository
+{
+    private $query;
 
-    private $entityManager;
-
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, DiscountCodes::class);
-        $this->entityManager = $this->getEntityManager();
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -49,43 +50,41 @@ class DiscountCodesRepository extends ServiceEntityRepository {
       ;
       }
      */
-    public function getDiscountCodeID(string $discountCode) {
-        $query = $this->entityManager->createQueryBuilder();
 
-        $query
-                ->select('db.id')
-                ->from(DiscountCodes::class, 'db')
-                ->where('db.code = :discountCode')
-                ->andWhere('db.deleted is null')
-                ->setParameter(':discountCode', $discountCode)
-        ;
+    public function getDiscountCodeID(string $discountCode)
+    {
+        $this->query
+            ->select('db.id')
+            ->from(DiscountCodes::class, 'db')
+            ->where('db.code = :discountCode')
+            ->andWhere('db.deleted is null')
+            ->setParameter(':discountCode', $discountCode);
 
-        $queryResult = $query->getQuery()->getResult();
-
-        return $queryResult;
+        return $this->query->getQuery()->getResult();
     }
 
-    public function getDiscountCode(string $orderDiscountCode) {
-        $query = $this->entityManager->createQueryBuilder();
+    public function getDiscountCode(string $orderDiscountCode)
+    {
+        $this->query
+            ->select('db.code, db.discount, db.expiry_date')
+            ->from(DiscountCodes::class, 'db')
+            ->where('db.code = :discountCode')
+            ->andWhere('db.deleted is null')
+            ->setParameter(':discountCode', $orderDiscountCode);
 
-        $query
-                ->select('db.code, db.discount, db.expiry_date')
-                ->from(DiscountCodes::class, 'db')
-                ->where('db.code = :discountCode')
-                ->andWhere('db.deleted is null')
-                ->setParameter(':discountCode', $orderDiscountCode)
-        ;
+        return $this->query->getQuery()->getOneOrNullResult();
+    }
 
-        $queryResult = $query->getQuery()->getOneOrNullResult();
-
-        return $queryResult;
-    }    
-    
-    public function increaseDiscountCodeUsedField(object $discountCode) {
+    public function increaseDiscountCodeUsedField(object $discountCode)
+    {
         $discountCode->setCodeUsed($discountCode->getCodeUsed() + 1);
 
-        $this->entityManager->persist($discountCode);
-        $this->entityManager->flush();
+        try {
+            $this->getEntityManager()->persist($discountCode);
+            $this->getEntityManager()->flush();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
-
 }

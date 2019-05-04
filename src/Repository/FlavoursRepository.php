@@ -14,9 +14,12 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class FlavoursRepository extends ServiceEntityRepository
 {
+    private $query;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Flavours::class);
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -47,19 +50,15 @@ class FlavoursRepository extends ServiceEntityRepository
         ;
     }
     */
-    
-    public function checkIfFlavourExist(string $flavourName) {
-        $query = $this->getEntityManager()->createQueryBuilder();
-        
-        $query
-                ->select('db.name')
-                ->from(Flavours::class, 'db')
-                ->where('db.name = :flavour')
-                ->setParameter(':flavour', $flavourName, \PDO::PARAM_STR)
-        ;
-        
-        $result = $query->getQuery()->getResult();
-        
-        return $result;
+
+    public function checkIfFlavourExist(string $flavourName)
+    {
+        $this->query
+            ->select('db.name')
+            ->from(Flavours::class, 'db')
+            ->where('db.name = :flavour')
+            ->setParameter(':flavour', $flavourName, \PDO::PARAM_STR);
+
+        return  $this->query->getQuery()->getResult();
     }
 }

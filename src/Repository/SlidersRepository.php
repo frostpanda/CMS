@@ -13,10 +13,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Sliders[]    findAll()
  * @method Sliders[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SlidersRepository extends ServiceEntityRepository {
+class SlidersRepository extends ServiceEntityRepository
+{
+    private $query;
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, Sliders::class);
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -48,33 +52,28 @@ class SlidersRepository extends ServiceEntityRepository {
       }
      */
 
-    public function getProductSliderByProductID(Products $product) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function getProductSliderByProductID(Products $product)
+    {
+        $this->query
+            ->select('sliders')
+            ->from(Sliders::class, 'sliders')
+            ->where('sliders.product = :productID')
+            ->andWhere('sliders.deleted is null')
+            ->setParameter(':productID', $product->getId(), \PDO::PARAM_INT);
 
-        $query
-                ->select('sliders')
-                ->from(Sliders::class, 'sliders')
-                ->where('sliders.product = :productID')
-                ->andWhere('sliders.deleted is null')
-                ->setParameter(':productID', $product->getId(), \PDO::PARAM_INT)
-        ;
-
-        return $query->getQuery()->getResult();
+        return $this->query->getQuery()->getResult();
     }
 
-    public function getNumberOfImagesInSlider(Products $product) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function getNumberOfImagesInSlider(Products $product)
+    {
+        $this->query
+            ->select('count(sliders.id)')
+            ->from(Sliders::class, 'sliders')
+            ->where('sliders.product = :productID')
+            ->andWhere('sliders.position > 0')
+            ->andWhere('sliders.deleted is null')
+            ->setParameter(':productID', $product->getId(), \PDO::PARAM_INT);
 
-        $query
-                ->select('count(sliders.id)')
-                ->from(Sliders::class, 'sliders')
-                ->where('sliders.product = :productID')
-                ->andWhere('sliders.position > 0')
-                ->andWhere('sliders.deleted is null')
-                ->setParameter(':productID', $product->getId(), \PDO::PARAM_INT)
-        ;
-
-        return $query->getQuery()->getSingleScalarResult();
+        return $this->query->getQuery()->getSingleScalarResult();
     }
-
 }

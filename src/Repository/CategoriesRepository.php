@@ -13,10 +13,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Categories[]    findAll()
  * @method Categories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategoriesRepository extends ServiceEntityRepository {
+class CategoriesRepository extends ServiceEntityRepository
+{
+    private $query;
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, Categories::class);
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -58,7 +62,8 @@ class CategoriesRepository extends ServiceEntityRepository {
       ;
       }
      */
-    public function getCategoryTable() {
+    public function getCategoryTable()
+    {
         $db = $this->getEntityManager()->getConnection();
 
         $query = '
@@ -74,37 +79,31 @@ class CategoriesRepository extends ServiceEntityRepository {
         $exec = $db->prepare($query);
         $exec->execute();
 
-        $categoryTable = $exec->fetchAll();
-
-        return $categoryTable;
+        return $exec->fetchAll();
     }
 
-    public function checkIfCategoryUrlExist(string $categoryUrl) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function checkIfCategoryUrlExist(string $categoryUrl)
+    {
+        $this->query
+            ->select('db.id')
+            ->from(Categories::class, 'db')
+            ->where('db.url = :url')
+            ->andWhere('db.deleted is null')
+            ->setParameter(':url', $categoryUrl, \PDO::PARAM_STR);
 
-        $query
-                ->select('db.id')
-                ->from(Categories::class, 'db')
-                ->where('db.url = :url')
-                ->andWhere('db.deleted is null')
-                ->setParameter(':url', $categoryUrl, \PDO::PARAM_STR)
-        ;
-
-        return $query->getQuery()->getResult();
+        return $this->query->getQuery()->getResult();
     }
 
-    public function checkIfCategoryHasProducts(int $categoryID) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function checkIfCategoryHasProducts(int $categoryID)
+    {
+        $this->queryBuilder
+            ->select('count(db.id)')
+            ->from(Products::class, 'db')
+            ->where('db.category = :category')
+            ->andWhere('db.deleted is null')
+            ->setParameter(':category', $categoryID, \PDO::PARAM_INT);
 
-        $query
-                ->select('count(db.id)')
-                ->from(Products::class, 'db')
-                ->where('db.category = :category')
-                ->andWhere('db.deleted is null')
-                ->setParameter(':category', $categoryID, \PDO::PARAM_INT)
-        ;
-
-        $productsInCategory = $query->getQuery()->getSingleScalarResult();
+        $productsInCategory = $this->queryBuilder->getQuery()->getSingleScalarResult();
 
         if ($productsInCategory > 0) {
             return true;
@@ -112,5 +111,4 @@ class CategoriesRepository extends ServiceEntityRepository {
             return false;
         }
     }
-
 }

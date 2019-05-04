@@ -13,19 +13,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @method Administrator[]    findAll()
  * @method Administrator[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AdministratorRepository extends ServiceEntityRepository {
+class AdministratorRepository extends ServiceEntityRepository
+{
+  public function __construct(RegistryInterface $registry)
+  {
+    parent::__construct($registry, Administrator::class);
+  }
 
-    private $passwordEncoder;
-
-    public function __construct(RegistryInterface $registry, UserPasswordEncoderInterface $passwordEncoder) {
-        parent::__construct($registry, Administrator::class);
-        $this->passwordEncoder = $passwordEncoder;
-    }
-
-    // /**
-    //  * @return Administrator[] Returns an array of Administrator objects
-    //  */
-    /*
+  // /**
+  //  * @return Administrator[] Returns an array of Administrator objects
+  //  */
+  /*
       public function findByExampleField($value)
       {
       return $this->createQueryBuilder('a')
@@ -39,7 +37,7 @@ class AdministratorRepository extends ServiceEntityRepository {
       }
      */
 
-    /*
+  /*
       public function findOneBySomeField($value): ?Administrator
       {
       return $this->createQueryBuilder('a')

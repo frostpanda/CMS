@@ -13,10 +13,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Images[]    findAll()
  * @method Images[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ImagesRepository extends ServiceEntityRepository {
+class ImagesRepository extends ServiceEntityRepository
+{
+    private $query;
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, Images::class);
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -48,18 +52,15 @@ class ImagesRepository extends ServiceEntityRepository {
       }
      */
 
-    public function getProductImagesByProductID(Products $product) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function getProductImagesByProductID(Products $product)
+    {
+        $this->query
+            ->select('images')
+            ->from(Images::class, 'images')
+            ->where('images.product = :productID')
+            ->andWhere('images.deleted is null')
+            ->setParameter(':productID', $product->getId(), \PDO::PARAM_INT);
 
-        $query
-                ->select('images')
-                ->from(Images::class, 'images')
-                ->where('images.product = :productID')
-                ->andWhere('images.deleted is null')
-                ->setParameter(':productID', $product->getId(), \PDO::PARAM_INT)
-        ;
-
-        return $query->getQuery()->getResult();
+        return $this->query->getQuery()->getResult();
     }
-
 }

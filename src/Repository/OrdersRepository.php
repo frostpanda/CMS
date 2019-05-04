@@ -12,10 +12,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Orders[]    findAll()
  * @method Orders[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class OrdersRepository extends ServiceEntityRepository {
+class OrdersRepository extends ServiceEntityRepository
+{
+    private $query;
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(RegistryInterface $registry)
+    {
         parent::__construct($registry, Orders::class);
+        $this->query = $this->getEntityManager()->createQueryBuilder();
     }
 
     // /**
@@ -47,22 +51,20 @@ class OrdersRepository extends ServiceEntityRepository {
       }
      */
 
-    public function checkOrderNumber(int $orderNumber) {
-        $query = $this->getEntityManager()->createQueryBuilder();
+    public function checkOrderNumber(int $orderNumber)
+    {
+        $this->query
+            ->select('orders.id')
+            ->from(Orders::class, 'orders')
+            ->where('orders.order_number = :orderNumber')
+            ->setParameter(':orderNumber', $orderNumber, \PDO::PARAM_INT);
 
-        $query
-                ->select('orders.id')
-                ->from(Orders::class, 'orders')
-                ->where('orders.order_number = :orderNumber')
-                ->setParameter(':orderNumber', $orderNumber, \PDO::PARAM_INT)
-                ->getQuery()
-                ->getResult();
+        $this->query->getQuery()->getResult();
 
-        if ($query) {
+        if ($this->query) {
             return true;
         } else {
             return false;
         }
     }
-
 }
