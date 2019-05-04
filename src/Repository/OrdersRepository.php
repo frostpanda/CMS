@@ -59,9 +59,7 @@ class OrdersRepository extends ServiceEntityRepository
             ->where('orders.order_number = :orderNumber')
             ->setParameter(':orderNumber', $orderNumber, \PDO::PARAM_INT);
 
-        $this->query->getQuery()->getResult();
-
-        if ($this->query) {
+        if ( $this->query->getQuery()->getResult()) {
             return true;
         } else {
             return false;

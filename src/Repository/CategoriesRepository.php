@@ -103,9 +103,7 @@ class CategoriesRepository extends ServiceEntityRepository
             ->andWhere('db.deleted is null')
             ->setParameter(':category', $categoryID, \PDO::PARAM_INT);
 
-        $productsInCategory = $this->queryBuilder->getQuery()->getSingleScalarResult();
-
-        if ($productsInCategory > 0) {
+        if ($this->queryBuilder->getQuery()->getSingleScalarResult() > 0) {
             return true;
         } else {
             return false;
