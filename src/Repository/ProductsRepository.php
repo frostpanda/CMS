@@ -67,7 +67,7 @@ class ProductsRepository extends ServiceEntityRepository
             ->andWhere('products.on_stock = 1')
             ->orderBy('products.name', 'ASC');
 
-        return $this->getOneOrNullResult();
+        return $this->query->getQuery()->getResult();
     }
 
     public function getProductName($productID)
