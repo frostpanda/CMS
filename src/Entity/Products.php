@@ -62,12 +62,12 @@ class Products {
     private $votes;
 
     /**
-     * @ORM\Column(type="smallint", options={"default" : 0})
+     * @ORM\Column(type="smallint")
      */
-    private $on_stock;
+    private $on_stock = 0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, options={"default":"CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
 
@@ -97,16 +97,10 @@ class Products {
     private $productImages;
     private $images;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sliders", mappedBy="product")
-     */
-    private $productSlider;
-    private $sliderImages;
 
     public function __construct() {
         $this->productImages = new ArrayCollection();
         $this->orderedProducts = new ArrayCollection();
-        $this->productSlider = new ArrayCollection();
     }
 
     public function setImages(array $images) {
@@ -213,7 +207,7 @@ class Products {
         return $this;
     }
 
-    public function getOnStock(): ?string {
+    public function getOnStock(): ?int {
         return $this->on_stock;
     }
 
@@ -247,8 +241,8 @@ class Products {
         return $this->deleted;
     }
 
-    public function setDeleted(?\DateTimeInterface $deleted): self {
-        $this->deleted = $deleted;
+    public function setDeleted(): self {
+        $this->deleted = new \DateTime('now');
 
         return $this;
     }
@@ -319,33 +313,4 @@ class Products {
 
         return $this;
     }
-
-    /**
-     * @return Collection|Sliders[]
-     */
-    public function getProductSlider(): Collection {
-        return $this->productSlider;
-    }
-
-    public function addProductSlider(Sliders $productSlider): self {
-        if (!$this->productSlider->contains($productSlider)) {
-            $this->productSlider[] = $productSlider;
-            $productSlider->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductSlider(Sliders $productSlider): self {
-        if ($this->productSlider->contains($productSlider)) {
-            $this->productSlider->removeElement($productSlider);
-            // set the owning side to null (unless already changed)
-            if ($productSlider->getProduct() === $this) {
-                $productSlider->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
-
 }
