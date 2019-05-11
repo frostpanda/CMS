@@ -18,12 +18,6 @@ class Sliders {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Products", inversedBy="productSlider")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $product;
-
-    /**
      * @ORM\Column(type="string", length=50)
      */
     private $name;
@@ -50,16 +44,6 @@ class Sliders {
 
     public function getId(): ?int {
         return $this->id;
-    }
-
-    public function getProduct(): ?Products {
-        return $this->product;
-    }
-
-    public function setProduct(?Products $product): self {
-        $this->product = $product;
-
-        return $this;
     }
 
     public function getName(): ?string {
